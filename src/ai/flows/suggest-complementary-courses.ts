@@ -14,14 +14,14 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const SuggestComplementaryCoursesInputSchema = z.object({
-  courseName: z.string().describe('The name of the course to find suggestions for.'),
+  courseName: z.string().describe('El nombre del curso para el cual encontrar sugerencias.'),
 });
 export type SuggestComplementaryCoursesInput = z.infer<typeof SuggestComplementaryCoursesInputSchema>;
 
 const SuggestComplementaryCoursesOutputSchema = z.object({
   suggestedCourses: z
     .array(z.string())
-    .describe('An array of names of suggested complementary courses.'),
+    .describe('Un arreglo de nombres de cursos complementarios sugeridos.'),
 });
 export type SuggestComplementaryCoursesOutput = z.infer<typeof SuggestComplementaryCoursesOutputSchema>;
 
@@ -33,9 +33,9 @@ const prompt = ai.definePrompt({
   name: 'suggestComplementaryCoursesPrompt',
   input: {schema: SuggestComplementaryCoursesInputSchema},
   output: {schema: SuggestComplementaryCoursesOutputSchema},
-  prompt: `You are a helpful assistant that suggests complementary courses based on the given course name.
+  prompt: `Eres un asistente útil que sugiere cursos complementarios basados en el nombre del curso proporcionado.
 
-  Suggest a list of courses that would complement the course named: {{{courseName}}}. Return the list of course names.`,
+  Sugiere una lista de cursos que complementarían el curso llamado: {{{courseName}}}. Devuelve la lista de nombres de los cursos.`,
 });
 
 const suggestComplementaryCoursesFlow = ai.defineFlow(

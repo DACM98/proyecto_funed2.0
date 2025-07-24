@@ -42,7 +42,7 @@ export function CourseCard({ course }: CourseCardProps) {
       <CardFooter className="p-4 pt-0">
         <Button asChild size="sm" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
           <Link href={`/courses/${course.id}`}>
-            View Details
+            Ver Detalles
             <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>

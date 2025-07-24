@@ -11,8 +11,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import Link from 'next/link';
 
 const formSchema = z.object({
-  email: z.string().email({ message: 'Please enter a valid email.' }),
-  password: z.string().min(1, { message: 'Password is required.' }),
+  email: z.string().email({ message: 'Por favor, introduce un email válido.' }),
+  password: z.string().min(1, { message: 'La contraseña es obligatoria.' }),
 });
 
 export function LoginForm() {
@@ -27,14 +27,14 @@ export function LoginForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // NOTE: This is a placeholder for actual login logic.
     console.log(values);
-    alert('Login functionality not implemented in this demo.');
+    alert('La funcionalidad de inicio de sesión no está implementada en esta demostración.');
   }
 
   return (
     <Card className="max-w-md mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl font-headline text-primary">Login</CardTitle>
-        <CardDescription>Enter your email below to login to your account.</CardDescription>
+        <CardTitle className="text-2xl font-headline text-primary">Iniciar Sesión</CardTitle>
+        <CardDescription>Introduce tu email para acceder a tu cuenta.</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -46,7 +46,7 @@ export function LoginForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="name@example.com" {...field} />
+                    <Input placeholder="nombre@ejemplo.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -58,9 +58,9 @@ export function LoginForm() {
               render={({ field }) => (
                 <FormItem>
                   <div className="flex items-center justify-between">
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>Contraseña</FormLabel>
                     <Link href="#" className="text-sm text-accent hover:underline">
-                      Forgot password?
+                      ¿Olvidaste tu contraseña?
                     </Link>
                   </div>
                   <FormControl>
@@ -71,14 +71,14 @@ export function LoginForm() {
               )}
             />
             <Button type="submit" className="w-full bg-primary hover:bg-primary/90">
-              Login
+              Iniciar Sesión
             </Button>
           </form>
         </Form>
         <div className="mt-6 text-center text-sm">
-          Don&apos;t have an account?{' '}
+          ¿No tienes una cuenta?{' '}
           <Link href="/signup" className="underline text-accent hover:text-accent/80">
-            Sign up
+            Regístrate
           </Link>
         </div>
       </CardContent>

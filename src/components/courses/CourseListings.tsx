@@ -28,11 +28,11 @@ export function CourseListings({ courses }: CourseListingsProps) {
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
         <Input
           type="search"
-          placeholder="Search by keyword, category, or instructor..."
+          placeholder="Buscar por palabra clave, categoría o instructor..."
           className="pl-10 h-12 text-lg"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          aria-label="Search courses"
+          aria-label="Buscar cursos"
         />
       </div>
 
@@ -44,8 +44,8 @@ export function CourseListings({ courses }: CourseListingsProps) {
         </div>
       ) : (
         <div className="text-center py-16">
-          <h2 className="text-2xl font-semibold mb-2">No Courses Found</h2>
-          <p className="text-muted-foreground">Try adjusting your search term.</p>
+          <h2 className="text-2xl font-semibold mb-2">No se encontraron cursos</h2>
+          <p className="text-muted-foreground">Intenta ajustar tu término de búsqueda.</p>
         </div>
       )}
     </div>

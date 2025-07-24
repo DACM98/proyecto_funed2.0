@@ -25,7 +25,7 @@ export function SuggestedCourses({ courseName }: SuggestedCoursesProps) {
         toast({
           variant: 'destructive',
           title: 'Error',
-          description: result.error || 'Failed to get suggestions.',
+          description: result.error || 'No se pudieron obtener sugerencias.',
         });
       }
     });
@@ -36,30 +36,30 @@ export function SuggestedCourses({ courseName }: SuggestedCoursesProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-3">
           <Wand2 className="text-primary" />
-          <span>AI Course Companion</span>
+          <span>Compañero de Curso con IA</span>
         </CardTitle>
       </CardHeader>
       <CardContent>
         {suggestions.length === 0 ? (
           <>
-            <p className="text-muted-foreground mb-4">Discover courses that complement "{courseName}".</p>
+            <p className="text-muted-foreground mb-4">Descubre cursos que complementan "{courseName}".</p>
             <Button onClick={handleGetSuggestions} disabled={isPending} className="bg-accent text-accent-foreground hover:bg-accent/90">
               {isPending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Generating...
+                  Generando...
                 </>
               ) : (
                 <>
                   <Wand2 className="mr-2 h-4 w-4" />
-                  Suggest Complementary Courses
+                  Sugerir Cursos Complementarios
                 </>
               )}
             </Button>
           </>
         ) : (
           <div>
-            <h3 className="font-semibold mb-3 text-lg">We also recommend:</h3>
+            <h3 className="font-semibold mb-3 text-lg">También recomendamos:</h3>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {suggestions.map((suggestion, index) => (
                 <li key={index} className="flex items-start p-3 bg-background rounded-md shadow-sm">
