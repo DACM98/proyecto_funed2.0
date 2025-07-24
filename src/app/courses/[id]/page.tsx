@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { SuggestedCourses } from '@/components/courses/SuggestedCourses';
-import { User, Calendar, Tag, AlertTriangle } from 'lucide-react';
+import { User, Clock, Tag, AlertTriangle } from 'lucide-react';
 
 type CoursePageProps = {
   params: {
@@ -30,7 +30,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
        <div className="mb-6 p-4 rounded-md bg-primary/10 border border-primary/20 text-primary flex items-center gap-3">
           <AlertTriangle className="h-5 w-5" />
           <p className="font-medium text-sm">
-            This is a protected page. In a real app, you would be redirected to login if not authenticated.
+            Esta es una página protegida. En una aplicación real, serías redirigido a iniciar sesión si no estás autenticado.
           </p>
         </div>
 
@@ -45,8 +45,8 @@ export default async function CoursePage({ params }: CoursePageProps) {
                 <span>Instructor: {course.instructor}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-accent" />
-                <span>Schedule: {course.schedule}</span>
+                <Clock className="w-5 h-5 text-accent" />
+                <span>Duración: {course.duration} horas</span>
               </div>
             </div>
             <div className="prose prose-lg max-w-none text-foreground">

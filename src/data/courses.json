@@ -1,62 +1,63 @@
+
 [
   {
-    "id": "wd-101",
-    "title": "Introduction to Web Development",
-    "description": "A comprehensive introduction to the world of web development. Learn the fundamentals of HTML, CSS, and JavaScript, the core technologies behind all websites. This course is perfect for beginners with no prior coding experience, guiding you from basic concepts to building your first interactive web pages.",
-    "instructor": "Dr. Evelyn Reed",
-    "category": "Web Development",
-    "schedule": "Mon, Wed, Fri - 10:00 AM",
+    "id": "maq-101",
+    "title": "Maquillaje Profesional",
+    "description": "Domina las técnicas de maquillaje para eventos sociales, fotografía y pasarela. Aprende sobre visagismo, colorimetría y aplicación de productos para crear looks espectaculares y duraderos. Ideal para iniciar tu carrera como maquillador profesional.",
+    "instructor": "Valentina Rossi",
+    "category": "Maquillaje",
+    "duration": 80,
     "image": "https://placehold.co/600x400.png",
-    "data-ai-hint": "programming code"
+    "data-ai-hint": "makeup artist"
   },
   {
-    "id": "ds-201",
-    "title": "Data Science Fundamentals",
-    "description": "Unlock the power of data. This course covers the basics of data science, including data analysis, visualization, and statistical modeling using Python. You'll work with popular libraries like Pandas, Matplotlib, and Scikit-learn to solve real-world problems and derive meaningful insights from data.",
-    "instructor": "Dr. Kenji Tanaka",
-    "category": "Data Science",
-    "schedule": "Tue, Thu - 2:00 PM",
+    "id": "pel-201",
+    "title": "Peluquería y Estilismo Avanzado",
+    "description": "Perfecciona tus habilidades en corte, color y peinado con las últimas tendencias del mercado. Este curso práctico te enseñará técnicas de colorimetría avanzada, cortes modernos y peinados de alta costura para que destaques en el salón.",
+    "instructor": "Javier Morales",
+    "category": "Peluquería",
+    "duration": 120,
     "image": "https://placehold.co/600x400.png",
-    "data-ai-hint": "data charts"
+    "data-ai-hint": "hair styling"
   },
   {
-    "id": "gd-150",
-    "title": "Graphic Design for Beginners",
-    "description": "Discover the principles of great design and learn to create stunning visuals. This course introduces you to the fundamentals of graphic design, including color theory, typography, and layout. Using industry-standard software, you'll develop a portfolio of your own design projects.",
-    "instructor": "Maria Garcia",
-    "category": "Design",
-    "schedule": "Mon, Wed - 6:00 PM",
+    "id": "man-150",
+    "title": "Diseño de Uñas y Manicura",
+    "description": "Conviértete en una artista de uñas. Aprende desde la manicura y pedicura básica hasta las técnicas más avanzadas de nail art, uñas acrílicas y de gel. Descubre cómo crear diseños únicos y ofrecer un servicio de alta calidad.",
+    "instructor": "Sofia Castro",
+    "category": "Manicura",
+    "duration": 60,
     "image": "https://placehold.co/600x400.png",
-    "data-ai-hint": "design illustration"
+    "data-ai-hint": "nail art"
   },
   {
-    "id": "pm-301",
-    "title": "Agile Project Management",
-    "description": "Master the Agile framework and lead successful projects. This course provides a deep dive into Agile and Scrum methodologies, teaching you how to manage projects efficiently, adapt to change, and deliver value to stakeholders. Ideal for aspiring project managers and team leads.",
-    "instructor": "Samuel Jones",
-    "category": "Business",
-    "schedule": "Saturdays - 11:00 AM",
+    "id": "cpf-301",
+    "title": "Cuidado de la Piel y Faciales",
+    "description": "Conoce los secretos para una piel radiante. Este curso te formará en diagnósticos de piel, limpiezas faciales profundas, tratamientos antiedad y el uso de aparatología estética. Prepara a tus clientes para lucir una piel sana y bella.",
+    "instructor": "Dra. Isabela Rios",
+    "category": "Estética Facial",
+    "duration": 90,
     "image": "https://placehold.co/600x400.png",
-    "data-ai-hint": "team collaboration"
+    "data-ai-hint": "skin care"
   },
   {
-    "id": "py-101",
-    "title": "Python for Everybody",
-    "description": "A gentle introduction to programming using Python. Designed for absolute beginners, this course avoids complex mathematics and focuses on building practical programming skills. You'll learn about variables, conditional logic, loops, and functions, writing your first simple programs.",
-    "instructor": "Dr. Chen Wei",
-    "category": "Programming",
-    "schedule": "Online, Self-paced",
+    "id": "bar-101",
+    "title": "Barbería Clásica y Moderna",
+    "description": "Domina el arte de la barbería. Desde el afeitado clásico con navaja hasta los cortes y desvanecidos más modernos, este curso te dará las herramientas para ofrecer un servicio masculino de primera categoría.",
+    "instructor": "Ricardo 'El Barbero' Vargas",
+    "category": "Barbería",
+    "duration": 70,
     "image": "https://placehold.co/600x400.png",
-    "data-ai-hint": "python code"
+    "data-ai-hint": "barber shop"
   },
   {
-    "id": "mkt-220",
-    "title": "Digital Marketing Essentials",
-    "description": "Learn how to promote brands and products in the digital age. This course covers key areas of digital marketing, including Search Engine Optimization (SEO), social media marketing, and content strategy. Gain the skills to launch and manage effective online marketing campaigns.",
-    "instructor": "Aisha Khan",
-    "category": "Marketing",
-    "schedule": "Tue, Thu - 7:00 PM",
+    "id": "dep-220",
+    "title": "Técnicas de Depilación",
+    "description": "Aprende los diferentes métodos de depilación corporal y facial. El curso cubre desde la cera tradicional hasta las técnicas más novedosas del mercado, asegurando un servicio eficaz, higiénico y con el mínimo dolor para el cliente.",
+    "instructor": "Laura Méndez",
+    "category": "Depilación",
+    "duration": 40,
     "image": "https://placehold.co/600x400.png",
-    "data-ai-hint": "social media"
+    "data-ai-hint": "waxing beauty"
   }
 ]
