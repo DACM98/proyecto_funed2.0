@@ -3,8 +3,35 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/context/AuthContext';
+import { auth } from '@/lib/firebase';
+import { signOut } from 'firebase/auth';
+import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/use-toast';
+import { User, LogOut } from 'lucide-react';
 
 export function Header() {
+  const { user } = useAuth();
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      toast({
+        title: 'Sesión Cerrada',
+        description: 'Has cerrado sesión exitosamente.',
+      });
+      router.push('/');
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'No se pudo cerrar la sesión.',
+      });
+    }
+  };
+
   return (
     <header className="bg-card/80 backdrop-blur-lg border-b sticky top-0 z-50">
       <div className="container mx-auto px-4">
@@ -20,16 +47,31 @@ export function Header() {
           </Link>
           <nav className="hidden md:flex items-center gap-4">
              <Button variant="ghost" asChild>
-              <Link href="#courses">
+              <Link href="/#courses">
                 Cursos
               </Link>
             </Button>
-            <Button variant="ghost" asChild>
-               <Link href="/login">Iniciar Sesión</Link>
-            </Button>
-            <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
-               <Link href="/signup">Regístrate</Link>
-            </Button>
+            {user ? (
+               <>
+                <div className="flex items-center gap-2 text-sm text-foreground">
+                  <User className="w-4 h-4 text-accent" />
+                  <span>{user.displayName || user.email}</span>
+                </div>
+                <Button variant="ghost" onClick={handleLogout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Cerrar Sesión
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="ghost" asChild>
+                   <Link href="/login">Iniciar Sesión</Link>
+                </Button>
+                <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                   <Link href="/signup">Regístrate</Link>
+                </Button>
+              </>
+            )}
           </nav>
           <div className="md:hidden">
             {/* Mobile menu could be implemented here */}
