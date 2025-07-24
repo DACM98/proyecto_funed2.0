@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { getSuggestedCourses } from '@/actions/courses';
-import { Wand2, Loader2, AlertTriangle, Lightbulb } from 'lucide-react';
+import { Wand2, Loader2, Lightbulb } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 type SuggestedCoursesProps = {
@@ -13,12 +12,26 @@ type SuggestedCoursesProps = {
 
 export function SuggestedCourses({ courseName }: SuggestedCoursesProps) {
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [isPending, startTransition] = useTransition();
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const handleGetSuggestions = () => {
-    startTransition(async () => {
-      const result = await getSuggestedCourses(courseName);
+  const handleGetSuggestions = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/suggest-courses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ courseName }),
+      });
+
+      if (!response.ok) {
+        throw new Error('La respuesta de la red no fue correcta');
+      }
+
+      const result = await response.json();
+
       if (result.success && result.courses) {
         setSuggestions(result.courses);
       } else {
@@ -28,7 +41,15 @@ export function SuggestedCourses({ courseName }: SuggestedCoursesProps) {
           description: result.error || 'No se pudieron obtener sugerencias.',
         });
       }
-    });
+    } catch (error) {
+       toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: 'Ocurrió un error al contactar al servidor de sugerencias.',
+        });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -43,8 +64,8 @@ export function SuggestedCourses({ courseName }: SuggestedCoursesProps) {
         {suggestions.length === 0 ? (
           <>
             <p className="text-muted-foreground mb-4">Descubre cursos que complementan "{courseName}".</p>
-            <Button onClick={handleGetSuggestions} disabled={isPending} className="bg-accent text-accent-foreground hover:bg-accent/90">
-              {isPending ? (
+            <Button onClick={handleGetSuggestions} disabled={isLoading} className="bg-accent text-accent-foreground hover:bg-accent/90">
+              {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Generando...
@@ -68,6 +89,19 @@ export function SuggestedCourses({ courseName }: SuggestedCoursesProps) {
                 </li>
               ))}
             </ul>
+             <Button onClick={handleGetSuggestions} disabled={isLoading} className="bg-accent text-accent-foreground hover:bg-accent/90 mt-4">
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Generando de nuevo...
+                </>
+              ) : (
+                <>
+                  <Wand2 className="mr-2 h-4 w-4" />
+                  Sugerir de nuevo
+                </>
+              )}
+            </Button>
           </div>
         )}
       </CardContent>
