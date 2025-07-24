@@ -1,13 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getCourseById, getAllCourses } from '@/lib/courses';
+import { getCourseById } from '@/lib/courses';
 import type { Course } from '@/lib/types';
 import { notFound, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { SuggestedCourses } from '@/components/courses/SuggestedCourses';
-import { User, Clock, Tag, AlertTriangle } from 'lucide-react';
+import { User, Clock, AlertTriangle } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Loader2 } from 'lucide-react';
 
@@ -17,48 +17,39 @@ type CoursePageProps = {
   };
 };
 
-export default function CoursePage({ params }: CoursePageProps) {
+function CourseDetails({ course }: { course: Course | undefined }) {
   const { user, loading } = useAuth();
   const router = useRouter();
-  const [course, setCourse] = useState<Course | null | undefined>(null);
 
   useEffect(() => {
-    if (!loading) {
-      if (!user) {
-        router.push('/login');
-      } else {
-        const fetchCourse = async () => {
-          const courseData = await getCourseById(params.id);
-          setCourse(courseData);
-        };
-        fetchCourse();
-      }
+    if (!loading && !user) {
+      router.push('/login');
     }
-  }, [user, loading, params.id, router]);
-  
-  // This will be used by generateStaticParams in a real build scenario
-  // but for the dynamic client-side check, we handle it inside the component.
-  // export async function generateStaticParams() {
-  //   const courses = await getAllCourses();
-  //   return courses.map(course => ({
-  //     id: course.id,
-  //   }));
-  // }
+  }, [user, loading, router]);
 
-  if (loading || course === null) {
-     return (
+  if (loading) {
+    return (
       <div className="flex justify-center items-center h-[60vh]">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
   }
 
-  if (course === undefined) {
-    notFound();
+  if (!user) {
+    // This state is briefly hit before the redirect, show loader to prevent content flash
+    return (
+       <div className="flex justify-center items-center h-[60vh]">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
   }
 
+  if (!course) {
+    notFound();
+  }
+  
   return (
-    <div className="container mx-auto px-4 py-8 md:py-12">
+     <div className="container mx-auto px-4 py-8 md:py-12">
        <div className="mb-6 p-4 rounded-md bg-primary/10 border border-primary/20 text-primary flex items-center gap-3">
           <AlertTriangle className="h-5 w-5" />
           <p className="font-medium text-sm">
@@ -101,5 +92,16 @@ export default function CoursePage({ params }: CoursePageProps) {
 
       <SuggestedCourses courseName={course.title} />
     </div>
-  );
+  )
+}
+
+
+export default async function CoursePage({ params }: CoursePageProps) {
+  const course = await getCourseById(params.id);
+  
+  if (!course) {
+    notFound();
+  }
+
+  return <CourseDetails course={course} />;
 }
