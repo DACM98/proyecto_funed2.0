@@ -1,0 +1,62 @@
+[
+  {
+    "id": "wd-101",
+    "title": "Introduction to Web Development",
+    "description": "A comprehensive introduction to the world of web development. Learn the fundamentals of HTML, CSS, and JavaScript, the core technologies behind all websites. This course is perfect for beginners with no prior coding experience, guiding you from basic concepts to building your first interactive web pages.",
+    "instructor": "Dr. Evelyn Reed",
+    "category": "Web Development",
+    "schedule": "Mon, Wed, Fri - 10:00 AM",
+    "image": "https://placehold.co/600x400.png",
+    "data-ai-hint": "programming code"
+  },
+  {
+    "id": "ds-201",
+    "title": "Data Science Fundamentals",
+    "description": "Unlock the power of data. This course covers the basics of data science, including data analysis, visualization, and statistical modeling using Python. You'll work with popular libraries like Pandas, Matplotlib, and Scikit-learn to solve real-world problems and derive meaningful insights from data.",
+    "instructor": "Dr. Kenji Tanaka",
+    "category": "Data Science",
+    "schedule": "Tue, Thu - 2:00 PM",
+    "image": "https://placehold.co/600x400.png",
+    "data-ai-hint": "data charts"
+  },
+  {
+    "id": "gd-150",
+    "title": "Graphic Design for Beginners",
+    "description": "Discover the principles of great design and learn to create stunning visuals. This course introduces you to the fundamentals of graphic design, including color theory, typography, and layout. Using industry-standard software, you'll develop a portfolio of your own design projects.",
+    "instructor": "Maria Garcia",
+    "category": "Design",
+    "schedule": "Mon, Wed - 6:00 PM",
+    "image": "https://placehold.co/600x400.png",
+    "data-ai-hint": "design illustration"
+  },
+  {
+    "id": "pm-301",
+    "title": "Agile Project Management",
+    "description": "Master the Agile framework and lead successful projects. This course provides a deep dive into Agile and Scrum methodologies, teaching you how to manage projects efficiently, adapt to change, and deliver value to stakeholders. Ideal for aspiring project managers and team leads.",
+    "instructor": "Samuel Jones",
+    "category": "Business",
+    "schedule": "Saturdays - 11:00 AM",
+    "image": "https://placehold.co/600x400.png",
+    "data-ai-hint": "team collaboration"
+  },
+  {
+    "id": "py-101",
+    "title": "Python for Everybody",
+    "description": "A gentle introduction to programming using Python. Designed for absolute beginners, this course avoids complex mathematics and focuses on building practical programming skills. You'll learn about variables, conditional logic, loops, and functions, writing your first simple programs.",
+    "instructor": "Dr. Chen Wei",
+    "category": "Programming",
+    "schedule": "Online, Self-paced",
+    "image": "https://placehold.co/600x400.png",
+    "data-ai-hint": "python code"
+  },
+  {
+    "id": "mkt-220",
+    "title": "Digital Marketing Essentials",
+    "description": "Learn how to promote brands and products in the digital age. This course covers key areas of digital marketing, including Search Engine Optimization (SEO), social media marketing, and content strategy. Gain the skills to launch and manage effective online marketing campaigns.",
+    "instructor": "Aisha Khan",
+    "category": "Marketing",
+    "schedule": "Tue, Thu - 7:00 PM",
+    "image": "https://placehold.co/600x400.png",
+    "data-ai-hint": "social media"
+  }
+]
