@@ -18,8 +18,8 @@ export function CourseCard({ course }: CourseCardProps) {
           <Image
             src={course.image}
             alt={course.title}
-            layout="fill"
-            objectFit="cover"
+            fill
+            style={{objectFit: 'cover'}}
             data-ai-hint={course['data-ai-hint']}
           />
         </div>

@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getCourseById } from '@/lib/courses';
 import type { Course } from '@/lib/types';
 import { notFound, useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -10,6 +9,7 @@ import { SuggestedCourses } from '@/components/courses/SuggestedCourses';
 import { User, Clock, AlertTriangle } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Loader2 } from 'lucide-react';
+import { getCourseById } from '@/lib/courses';
 
 type CoursePageProps = {
   params: {
@@ -81,8 +81,8 @@ function CourseDetails({ course }: { course: Course | undefined }) {
               <Image
                 src={course.image}
                 alt={course.title}
-                layout="fill"
-                objectFit="cover"
+                fill
+                style={{objectFit: 'cover'}}
                 data-ai-hint={course['data-ai-hint']}
               />
             </div>
@@ -95,7 +95,7 @@ function CourseDetails({ course }: { course: Course | undefined }) {
   )
 }
 
-
+// This is the Server Component part of the page
 export default async function CoursePage({ params }: CoursePageProps) {
   const course = await getCourseById(params.id);
   
