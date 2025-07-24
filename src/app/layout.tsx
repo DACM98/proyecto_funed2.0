@@ -5,8 +5,8 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
-  title: 'Funed - Academia de Belleza',
-  description: 'Transforma tu pasión por la belleza en tu profesión.',
+  title: 'FUNED - Fundación Educativa de Desarrollo y Formación Integral',
+  description: 'Educación a tu Alcance.',
   icons: {
     icon: '/favicon.ico',
   },

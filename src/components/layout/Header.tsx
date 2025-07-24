@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Sparkles } from 'lucide-react';
+import { GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function Header() {
@@ -10,8 +10,8 @@ export function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors">
-            <Sparkles className="h-8 w-8" />
-            <span className="text-2xl font-bold font-headline">Funed</span>
+            <GraduationCap className="h-8 w-8" />
+            <span className="text-2xl font-bold font-headline">FUNED</span>
           </Link>
           <nav className="hidden md:flex items-center gap-4">
              <Button variant="ghost" asChild>

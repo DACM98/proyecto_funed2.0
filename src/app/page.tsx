@@ -16,24 +16,24 @@ export default async function HomePage() {
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-primary">
-                    Transforma tu pasión en tu profesión en Funed
+                    Fundación Educativa de Desarrollo y Formación Integral
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    Tu futuro en el mundo de la belleza comienza aquí. Ofrecemos cursos de vanguardia para que destaques.
+                    Educación a tu Alcance. Ofrecemos cursos de vanguardia para que destaques.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
                   <Link
-                    href="#"
+                    href="#courses"
                     className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                   >
-                    Inscríbete ahora
+                    Ver Cursos
                   </Link>
                   <Link
-                    href="#"
+                    href="/signup"
                     className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                   >
-                    Ver Cursos
+                    Inscríbete ahora
                   </Link>
                 </div>
               </div>
@@ -42,7 +42,7 @@ export default async function HomePage() {
                 width="600"
                 height="400"
                 alt="Hero"
-                data-ai-hint="beauty academy"
+                data-ai-hint="education foundation"
                 className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
               />
             </div>
@@ -73,9 +73,9 @@ export default async function HomePage() {
               </p>
             </div>
             <div className="mx-auto w-full max-w-sm space-y-2">
-              <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
-                Consulta tus Notas
-              </Button>
+               <Button asChild className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
+                 <Link href="/login">Consulta tus Notas</Link>
+               </Button>
             </div>
           </div>
         </section>
