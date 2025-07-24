@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'FUNED - Fundación Educativa de Desarrollo y Formación Integral',
   description: 'Educación a tu Alcance.',
   icons: {
-    icon: '/favicon.ico',
+    icon: '/logo.svg',
   },
 };
 
