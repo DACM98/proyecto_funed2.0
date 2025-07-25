@@ -9,7 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { auth } from '@/lib/firebase';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -51,16 +51,18 @@ export function SignUpForm() {
       await updateProfile(userCredential.user, {
         displayName: values.fullName
       });
+
+      await sendEmailVerification(userCredential.user);
       
       // Nota: La fecha de nacimiento (values.birthDate) está disponible aquí.
       // Para guardarla, necesitaríamos una base de datos como Firestore,
       // ya que Firebase Auth no tiene un campo estándar para esto.
 
       toast({
-        title: '¡Cuenta Creada!',
-        description: 'Tu cuenta ha sido creada exitosamente. ¡Bienvenido!',
+        title: '¡Revisa tu correo!',
+        description: 'Hemos enviado un enlace de verificación a tu email. Por favor, verifica tu cuenta para poder iniciar sesión.',
       });
-      router.push('/');
+      router.push('/login');
 
     } catch (error: any) {
       console.error("Error al registrarse: ", error);

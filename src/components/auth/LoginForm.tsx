@@ -36,7 +36,18 @@ export function LoginForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     try {
-      await signInWithEmailAndPassword(auth, values.email, values.password);
+      const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
+
+      if (!userCredential.user.emailVerified) {
+         toast({
+          variant: 'destructive',
+          title: 'Verificación de Email Requerida',
+          description: 'Por favor, verifica tu email antes de iniciar sesión. Revisa tu bandeja de entrada para encontrar el enlace de verificación.',
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
       toast({
         title: 'Inicio de Sesión Exitoso',
         description: '¡Bienvenido de vuelta!',
@@ -47,6 +58,8 @@ export function LoginForm() {
       let errorMessage = 'Ocurrió un error inesperado.';
       if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
         errorMessage = 'El email o la contraseña son incorrectos.';
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = 'El formato del email no es válido.';
       }
       toast({
         variant: 'destructive',
