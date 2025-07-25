@@ -8,24 +8,27 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Progress } from '@/components/ui/progress';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import type { EnrolledCourse, Grade } from '@/lib/types';
+import type { Grade } from '@/lib/types';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { useCourses } from '@/context/CourseContext';
+
 
 type DashboardClientProps = {
-  enrolledCourses: EnrolledCourse[];
   grades: Grade[];
 }
 
-export function DashboardClient({ enrolledCourses, grades }: DashboardClientProps) {
-  const { user, loading } = useAuth();
+export function DashboardClient({ grades }: DashboardClientProps) {
+  const { user, loading: authLoading } = useAuth();
+  const { enrolledCourses, loading: coursesLoading } = useCourses();
   const router = useRouter();
+  const loading = authLoading || coursesLoading;
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (!authLoading && !user) {
       router.push('/login');
     }
-  }, [user, loading, router]);
+  }, [user, authLoading, router]);
 
   if (loading || !user) {
     return (

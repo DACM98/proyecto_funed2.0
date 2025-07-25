@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import type { Course } from '@/lib/types';
+import type { Course, EnrolledCourse } from '@/lib/types';
 import { notFound, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
@@ -11,6 +11,7 @@ import { useAuth } from '@/context/AuthContext';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { useCourses } from '@/context/CourseContext';
 
 
 // Este es un Client Component que renderiza la UI y maneja la interactividad.
@@ -18,7 +19,8 @@ export function CourseDetails({ course }: { course: Course | undefined }) {
   const { user, loading } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
-  const [isEnrolled, setIsEnrolled] = useState(false);
+  const { isEnrolled, enrollCourse, isEnrolling } = useCourses();
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
 
 
@@ -27,6 +29,12 @@ export function CourseDetails({ course }: { course: Course | undefined }) {
       router.push('/login');
     }
   }, [user, loading, router]);
+  
+  if (!course) {
+    notFound();
+  }
+
+  const isCourseEnrolled = isEnrolled(course.id);
 
   if (loading) {
     return (
@@ -45,17 +53,17 @@ export function CourseDetails({ course }: { course: Course | undefined }) {
     );
   }
 
-  if (!course) {
-    notFound();
-  }
 
   const handleEnroll = async () => {
     setIsSubmitting(true);
-    // Simulación de una llamada a la API
-    // En una aplicación real, aquí llamarías a tu backend para inscribir al usuario.
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    setIsEnrolled(true);
+    const newEnrolledCourse: EnrolledCourse = {
+      id: course.id,
+      title: course.title,
+      instructor: course.instructor,
+      progress: 0,
+      status: 'en-progreso',
+    };
+    await enrollCourse(newEnrolledCourse);
     setIsSubmitting(false);
 
     toast({
@@ -92,14 +100,14 @@ export function CourseDetails({ course }: { course: Course | undefined }) {
               <p>{course.description}</p>
             </div>
             
-            {isEnrolled ? (
+            {isCourseEnrolled ? (
               <Button size="lg" disabled className="bg-green-600">
                 <CheckCircle className="mr-2 h-5 w-5" />
                 Ya estás inscrito
               </Button>
             ) : (
-              <Button size="lg" onClick={handleEnroll} disabled={isSubmitting}>
-                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              <Button size="lg" onClick={handleEnroll} disabled={isSubmitting || isEnrolling}>
+                {(isSubmitting || isEnrolling) && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Inscríbete Ahora
               </Button>
             )}
