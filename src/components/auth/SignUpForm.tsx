@@ -5,7 +5,8 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { auth } from '@/lib/firebase';
@@ -21,7 +22,13 @@ import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 
 const formSchema = z.object({
-  fullName: z.string().min(1, { message: 'El nombre completo es obligatorio.' }),
+  firstName: z.string().min(1, { message: 'El nombre es obligatorio.' }),
+  lastName: z.string().min(1, { message: 'El apellido es obligatorio.' }),
+  idType: z.enum(['CC', 'TI', 'CE'], {
+    required_error: 'El tipo de identificación es obligatorio.',
+  }),
+  idNumber: z.string().min(5, { message: 'El número de identificación debe tener al menos 5 dígitos.' }),
+  phone: z.string().min(7, { message: 'El número de teléfono debe tener al menos 7 dígitos.' }),
   email: z.string().email({ message: 'Por favor, introduce un email válido.' }),
   password: z.string().min(8, { message: 'La contraseña debe tener al menos 8 caracteres.' }),
   birthDate: z.date({
@@ -38,7 +45,10 @@ export function SignUpForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fullName: '',
+      firstName: '',
+      lastName: '',
+      idNumber: '',
+      phone: '',
       email: '',
       password: '',
     },
@@ -49,14 +59,13 @@ export function SignUpForm() {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
       await updateProfile(userCredential.user, {
-        displayName: values.fullName
+        displayName: `${values.firstName} ${values.lastName}`
       });
 
       await sendEmailVerification(userCredential.user);
       
-      // Nota: La fecha de nacimiento (values.birthDate) está disponible aquí.
-      // Para guardarla, necesitaríamos una base de datos como Firestore,
-      // ya que Firebase Auth no tiene un campo estándar para esto.
+      // Nota: Los datos adicionales (fecha de nacimiento, identificación, teléfono)
+      // están disponibles en `values` para ser guardados en una base de datos como Firestore.
 
       toast({
         title: '¡Revisa tu correo!',
@@ -81,7 +90,7 @@ export function SignUpForm() {
   }
 
   return (
-    <Card className="max-w-md mx-auto">
+    <Card className="max-w-xl mx-auto w-full">
       <CardHeader>
         <CardTitle className="text-2xl font-headline text-primary">Crear una cuenta</CardTitle>
         <CardDescription>Introduce tu información para crear una cuenta.</CardDescription>
@@ -89,31 +98,96 @@ export function SignUpForm() {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                 <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Nombre</FormLabel>
+                      <FormControl>
+                        <Input placeholder="John" {...field} disabled={isSubmitting} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                 <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Apellido</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Doe" {...field} disabled={isSubmitting} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+            </div>
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                 <FormField
+                  control={form.control}
+                  name="idType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Tipo de Identificación</FormLabel>
+                       <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isSubmitting}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecciona un tipo" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="CC">Cédula de Ciudadanía (CC)</SelectItem>
+                          <SelectItem value="TI">Tarjeta de Identidad (TI)</SelectItem>
+                          <SelectItem value="CE">Cédula de Extranjería (CE)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                 <FormField
+                  control={form.control}
+                  name="idNumber"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Número de Identificación</FormLabel>
+                      <FormControl>
+                        <Input placeholder="123456789" {...field} disabled={isSubmitting} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+            </div>
              <FormField
-              control={form.control}
-              name="fullName"
-              render={({ field }) => (
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nombre Completo</FormLabel>
-                  <FormControl>
-                    <Input placeholder="John Doe" {...field} disabled={isSubmitting} />
-                  </FormControl>
-                  <FormMessage />
+                    <FormLabel>Teléfono</FormLabel>
+                    <FormControl>
+                    <Input placeholder="3001234567" {...field} disabled={isSubmitting} />
+                    </FormControl>
+                    <FormMessage />
                 </FormItem>
-              )}
+                )}
             />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="nombre@ejemplo.com" {...field} disabled={isSubmitting} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+             <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                    <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                        <Input placeholder="nombre@ejemplo.com" {...field} disabled={isSubmitting} />
+                    </FormControl>
+                    <FormMessage />
+                    </FormItem>
+                )}
             />
              <FormField
               control={form.control}
