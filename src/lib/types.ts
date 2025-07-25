@@ -34,3 +34,19 @@ export interface Curso {
   image: string;
   'data-ai-hint': string;
 }
+
+export interface EnrolledCourse {
+  id: string;
+  title: string;
+  instructor: string;
+  progress: number; // percentage
+  status: 'en-progreso' | 'completado';
+}
+
+export interface Grade {
+  id: string;
+  courseName: string;
+  score: number; // out of 100
+  feedback: string;
+  date: string;
+}

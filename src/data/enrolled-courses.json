@@ -1,0 +1,24 @@
+
+[
+  {
+    "id": "maq-101",
+    "title": "Maquillaje Profesional",
+    "instructor": "Valentina Rossi",
+    "progress": 75,
+    "status": "en-progreso"
+  },
+  {
+    "id": "pel-201",
+    "title": "Peluquería y Estilismo Avanzado",
+    "instructor": "Javier Morales",
+    "progress": 30,
+    "status": "en-progreso"
+  },
+  {
+    "id": "man-150",
+    "title": "Diseño de Uñas y Manicura",
+    "instructor": "Sofia Castro",
+    "progress": 100,
+    "status": "completado"
+  }
+]
