@@ -13,12 +13,21 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { Loader2 } from 'lucide-react';
+import { CalendarIcon, Loader2 } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import { cn } from '@/lib/utils';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 const formSchema = z.object({
   fullName: z.string().min(1, { message: 'El nombre completo es obligatorio.' }),
   email: z.string().email({ message: 'Por favor, introduce un email válido.' }),
   password: z.string().min(8, { message: 'La contraseña debe tener al menos 8 caracteres.' }),
+  birthDate: z.date({
+    required_error: 'La fecha de nacimiento es obligatoria.',
+    invalid_type_error: "Ese no es un formato de fecha válido.",
+  }),
 });
 
 export function SignUpForm() {
@@ -42,6 +51,10 @@ export function SignUpForm() {
       await updateProfile(userCredential.user, {
         displayName: values.fullName
       });
+      
+      // Nota: La fecha de nacimiento (values.birthDate) está disponible aquí.
+      // Para guardarla, necesitaríamos una base de datos como Firestore,
+      // ya que Firebase Auth no tiene un campo estándar para esto.
 
       toast({
         title: '¡Cuenta Creada!',
@@ -96,6 +109,49 @@ export function SignUpForm() {
                   <FormControl>
                     <Input placeholder="nombre@ejemplo.com" {...field} disabled={isSubmitting} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <FormField
+              control={form.control}
+              name="birthDate"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Fecha de Nacimiento</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "w-full pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                           disabled={isSubmitting}
+                        >
+                          {field.value ? (
+                            format(field.value, "d 'de' LLLL 'de' yyyy", { locale: es })
+                          ) : (
+                            <span>Selecciona una fecha</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date("1920-01-01")
+                        }
+                        initialFocus
+                        locale={es}
+                      />
+                    </PopoverContent>
+                  </Popover>
                   <FormMessage />
                 </FormItem>
               )}
