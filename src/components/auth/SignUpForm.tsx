@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
@@ -14,12 +14,16 @@ import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } 
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { CalendarIcon, Loader2 } from 'lucide-react';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Calendar } from '@/components/ui/calendar';
-import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
+import { Loader2 } from 'lucide-react';
 import { es } from 'date-fns/locale';
+
+const months = Array.from({ length: 12 }, (_, i) => ({
+  value: String(i + 1),
+  label: new Date(0, i).toLocaleString('es', { month: 'long' }),
+}));
+
+const currentYear = new Date().getFullYear();
+const years = Array.from({ length: 100 }, (_, i) => String(currentYear - 18 - i));
 
 const formSchema = z.object({
   firstName: z.string().min(1, { message: 'El nombre es obligatorio.' }),
@@ -31,10 +35,15 @@ const formSchema = z.object({
   phone: z.string().min(7, { message: 'El número de teléfono debe tener al menos 7 dígitos.' }),
   email: z.string().email({ message: 'Por favor, introduce un email válido.' }),
   password: z.string().min(8, { message: 'La contraseña debe tener al menos 8 caracteres.' }),
-  birthDate: z.date({
-    required_error: 'La fecha de nacimiento es obligatoria.',
-    invalid_type_error: "Ese no es un formato de fecha válido.",
-  }),
+  birthDay: z.string().min(1, { message: 'El día es obligatorio.' }),
+  birthMonth: z.string().min(1, { message: 'El mes es obligatorio.' }),
+  birthYear: z.string().min(1, { message: 'El año es obligatorio.' }),
+}).refine(data => {
+    const date = new Date(`${data.birthYear}-${data.birthMonth}-${data.birthDay}`);
+    return date.getDate() === parseInt(data.birthDay);
+}, {
+    message: 'La fecha de nacimiento no es válida.',
+    path: ['birthDay'],
 });
 
 export function SignUpForm() {
@@ -51,12 +60,16 @@ export function SignUpForm() {
       phone: '',
       email: '',
       password: '',
+      birthDay: '',
+      birthMonth: '',
+      birthYear: ''
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     try {
+      const birthDate = new Date(`${values.birthYear}-${values.birthMonth}-${values.birthDay}`).toISOString();
       const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
       await updateProfile(userCredential.user, {
         displayName: `${values.firstName} ${values.lastName}`
@@ -64,9 +77,6 @@ export function SignUpForm() {
 
       await sendEmailVerification(userCredential.user);
       
-      // Nota: Los datos adicionales (fecha de nacimiento, identificación, teléfono)
-      // están disponibles en `values` para ser guardados en una base de datos como Firestore.
-
       toast({
         title: '¡Revisa tu correo!',
         description: 'Hemos enviado un enlace de verificación a tu email. Por favor, verifica tu cuenta para poder iniciar sesión.',
@@ -88,6 +98,17 @@ export function SignUpForm() {
       setIsSubmitting(false);
     }
   }
+
+  const selectedYear = form.watch('birthYear');
+  const selectedMonth = form.watch('birthMonth');
+
+  const daysInMonth = (year: string, month: string) => {
+    if (!year || !month) return 31;
+    return new Date(Number(year), Number(month), 0).getDate();
+  };
+  
+  const dayOptions = Array.from({ length: daysInMonth(selectedYear, selectedMonth) }, (_, i) => String(i + 1));
+
 
   return (
     <Card className="max-w-xl mx-auto w-full">
@@ -176,7 +197,71 @@ export function SignUpForm() {
                 </FormItem>
                 )}
             />
-             <FormField
+            
+            <div>
+              <FormLabel>Fecha de Nacimiento</FormLabel>
+              <div className="grid grid-cols-3 gap-3 mt-2">
+                <FormField
+                  control={form.control}
+                  name="birthDay"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isSubmitting}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Día" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {dayOptions.map(day => <SelectItem key={day} value={day}>{day}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                 <FormField
+                  control={form.control}
+                  name="birthMonth"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isSubmitting}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Mes" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {months.map(month => <SelectItem key={month.value} value={month.value}>{month.label}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                 <FormField
+                  control={form.control}
+                  name="birthYear"
+                  render={({ field }) => (
+                    <FormItem>
+                       <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isSubmitting}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Año" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {years.map(year => <SelectItem key={year} value={year}>{year}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
@@ -188,49 +273,6 @@ export function SignUpForm() {
                     <FormMessage />
                     </FormItem>
                 )}
-            />
-             <FormField
-              control={form.control}
-              name="birthDate"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Fecha de Nacimiento</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-full pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground"
-                          )}
-                           disabled={isSubmitting}
-                        >
-                          {field.value ? (
-                            format(field.value, "d 'de' LLLL 'de' yyyy", { locale: es })
-                          ) : (
-                            <span>Selecciona una fecha</span>
-                          )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        disabled={(date) =>
-                          date > new Date() || date < new Date("1920-01-01")
-                        }
-                        initialFocus
-                        locale={es}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
             />
             <FormField
               control={form.control}
