@@ -45,7 +45,7 @@ export function Header() {
               priority
             />
           </Link>
-          <nav className="hidden md:flex items-center gap-4">
+          <nav className="hidden md:flex items-center gap-2">
              <Button variant="ghost" asChild>
               <Link href="/#courses">
                 Cursos
@@ -59,20 +59,17 @@ export function Header() {
                     Mi Panel
                   </Link>
                 </Button>
-                {/* TODO: Más adelante, podemos hacer que este enlace solo sea visible para los administradores. */}
                 <Button variant="ghost" asChild>
                    <Link href="/admin/courses">
                     <Cog className="mr-2 h-4 w-4" />
                     Administrar
                   </Link>
                 </Button>
-                <div className="flex items-center gap-2 text-sm text-foreground border-l pl-4">
-                  <User className="w-4 h-4 text-accent" />
+                <div className="flex items-center gap-2 text-sm text-foreground border-l pl-4 ml-2">
                   <span>{user.displayName || user.email}</span>
                 </div>
-                <Button variant="ghost" onClick={handleLogout}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Cerrar Sesión
+                <Button variant="ghost" size="icon" onClick={handleLogout} aria-label="Cerrar sesión">
+                  <LogOut className="h-5 w-5" />
                 </Button>
               </>
             ) : (
@@ -80,7 +77,7 @@ export function Header() {
                 <Button variant="ghost" asChild>
                    <Link href="/login">Iniciar Sesión</Link>
                 </Button>
-                <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                <Button asChild>
                    <Link href="/signup">Regístrate</Link>
                 </Button>
               </>
