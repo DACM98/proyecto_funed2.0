@@ -8,7 +8,7 @@ import { auth } from '@/lib/firebase';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
-import { User, LogOut, LayoutDashboard } from 'lucide-react';
+import { User, LogOut, LayoutDashboard, Cog } from 'lucide-react';
 
 export function Header() {
   const { user } = useAuth();
@@ -57,6 +57,13 @@ export function Header() {
                    <Link href="/dashboard">
                     <LayoutDashboard className="mr-2 h-4 w-4" />
                     Mi Panel
+                  </Link>
+                </Button>
+                {/* TODO: Más adelante, podemos hacer que este enlace solo sea visible para los administradores. */}
+                <Button variant="ghost" asChild>
+                   <Link href="/admin/courses">
+                    <Cog className="mr-2 h-4 w-4" />
+                    Administrar
                   </Link>
                 </Button>
                 <div className="flex items-center gap-2 text-sm text-foreground border-l pl-4">
