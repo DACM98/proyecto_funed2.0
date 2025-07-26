@@ -8,7 +8,7 @@ import { auth } from '@/lib/firebase';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
-import { User, LogOut, LayoutDashboard, Cog } from 'lucide-react';
+import { LayoutDashboard, Cog, LogOut } from 'lucide-react';
 
 export function Header() {
   const { user } = useAuth();
@@ -49,6 +49,11 @@ export function Header() {
              <Button variant="ghost" asChild>
               <Link href="/#courses">
                 Cursos
+              </Link>
+            </Button>
+            <Button variant="ghost" asChild>
+              <Link href="/#about">
+                Sobre Nosotros
               </Link>
             </Button>
             {user ? (

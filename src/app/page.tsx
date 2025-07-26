@@ -14,11 +14,11 @@ export default async function HomePage() {
           <div className="container px-4 md:px-6 text-center">
             <div className="flex flex-col justify-center space-y-4">
               <div className="space-y-2">
-                <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+                <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none font-headline">
                   Fundación Educativa de Desarrollo y Formación Integral
                 </h1>
                 <p className="max-w-[600px] mx-auto text-primary-foreground/80 md:text-xl">
-                  Educación a tu Alcance. Explora nuestros cursos de vanguardia.
+                  Educación a tu Alcance.
                 </p>
               </div>
               <div className="flex justify-center">
@@ -26,19 +26,33 @@ export default async function HomePage() {
                   href="#courses"
                   className="inline-flex h-12 items-center justify-center rounded-md bg-primary-foreground px-8 text-lg font-medium text-primary shadow transition-colors hover:bg-primary-foreground/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 >
-                  Ver Cursos Disponibles
+                  Explorar Cursos
                 </Link>
               </div>
             </div>
           </div>
         </section>
 
+        {/* About Us Section */}
+        <section id="about" className="w-full py-12 md:py-24 lg:py-32 bg-background">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary font-headline">Sobre Nosotros</h2>
+                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  En FUNED, nos dedicamos a ofrecer educación de alta calidad accesible para todos. Nuestra misión es potenciar el desarrollo profesional y personal de nuestros estudiantes a través de programas innovadores y un cuerpo docente de excelencia. Creemos en el poder de la formación integral para transformar vidas y construir un futuro mejor.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Course Listings Section */}
-        <section id="courses" className="w-full py-12 md:py-24 lg:py-32">
+        <section id="courses" className="w-full py-12 md:py-24 lg:py-32 bg-secondary/50">
             <div className="container mx-auto px-4">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
                     <div className="space-y-2">
-                        <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">Nuestra Oferta Educativa</h2>
+                        <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary font-headline">Nuestra Oferta Educativa</h2>
                         <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                             Programas diseñados para darte las habilidades que necesitas para destacar en el mundo profesional.
                         </p>
