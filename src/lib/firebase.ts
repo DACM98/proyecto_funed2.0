@@ -5,13 +5,12 @@ import { getAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  projectId: "course-compass-ku93m",
-  appId: "1:102104745243:web:06f7db6a942a24092ebfbe",
-  storageBucket: "course-compass-ku93m.firebasestorage.app",
-  apiKey: "AIzaSyB8Eg7pt-eWUzEuBYTxL3JbssDXON-awQ0",
-  authDomain: "course-compass-ku93m.firebaseapp.com",
-  measurementId: "",
-  messagingSenderId: "102104745243"
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
 };
 
 // Initialize Firebase
