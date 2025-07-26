@@ -52,7 +52,7 @@ export function LoginForm() {
         title: 'Inicio de Sesión Exitoso',
         description: '¡Bienvenido de vuelta!',
       });
-      router.push('/');
+      router.push('/dashboard');
     } catch (error: any) {
       console.error("Error al iniciar sesión: ", error);
       let errorMessage = 'Ocurrió un error inesperado.';
